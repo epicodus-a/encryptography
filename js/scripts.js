@@ -60,28 +60,63 @@ var twoDArray = function(aString, size){
   var twoDArray = [];
   var oneDArray = [];
   var i = 0;
-  while(i < aString.length){
-    debugger;
+    // debugger;
     for (var row = 0; row < size[0]; row++){
       for(var col = 0; col < size[1]; col++){
         oneDArray.push(aString[i]);
         i += 1;
       }
-      i += size[1];
       twoDArray.push(oneDArray);
       oneDArray = [];
     }
     i += size[0]*size[1];
-  }
   return twoDArray;
 }
 var aString = "dontcompareyourselftootherscompareyourselftothepersonyouwereyesterday";
-var size = [8,7];
-alert(twoDArray(aString, size));
+var size = [9,8];
+var td = twoDArray(aString, size);
 
 // A function to output a string by reading down the columns going left to right
+
+var outputArray = function(twoDArray){
+  // alert(twoDArray);
+  // debugger;
+  var row = twoDArray.length;
+  var col = twoDArray[0].length;
+
+  var result = [];
+
+  for (var r = 0; r < col; r ++){
+    for (var c = 0; c < row; c ++){
+      if(twoDArray[c][r]){
+      result.push(twoDArray[c][r]);
+      }
+    }
+  }
+  return result;
+};
+var rArray = outputArray(td);
+
 // in group of five letters
-var outputDown = function(twoDArray){
+var fiveLetterGroup = function(aArray){
+  result = "";
+  count = 0;
 
-
+  for ( var i = 0; i < aArray.length; i++){
+    // debugger;
+    if (i % 5 === 0){
+      count += 1;
+      // console.log(count);
+      result += aArray.slice(i-5, i).join("") + " ";
+      // console.log(result);
+    }
+  }
+  if ((count-1)*5 <= aArray.length){
+    result += aArray.slice((count-1)*5).join("");
+  }
+  return result;
 }
+alert(fiveLetterGroup(rArray));
+
+
+//////////////////////////////////////////////////////////////////////////////
