@@ -30,17 +30,16 @@
 // - Output string from top to bottom in groups of five letters
 //  - Example input: "Don't compare yourself to others, compare yourself to the person you were yesterday"
 //  - Exampel output: "daeer leweo rlref rerne fsyts rdtyt coooe acooo utnyy ouomr hyemr tpseo spsha eput"
-//
 
-// a function to remove all non-alphobetical element from a dowcased string
+// A function to remove all non-alphobetical element from a dowcased string
 // return a new string with all albetical letters
 var alphobeticalOnly = function(aString){
   var patter1 = /[a-zA-Z]+/g;
   return aString.toLowerCase().match(patter1).join("");
 }
-// alert(alphobeticalOnly("Don't compare yourself to others, compare yourself to the person you were yesterday"))
 
-// function to caculate square size as per input length
+//  A function to caculate square size as per input length
+// length: an integer
 // return an array with squer size
 var caculateSquareSize = function(length){
   var size = Math.sqrt(length);
@@ -50,9 +49,8 @@ var caculateSquareSize = function(length){
     return [parseInt(size) + 1, parseInt(size)]
   }
 }
-// alert(caculateSquareSize(40));
 
-// a function make a 2D array for a string
+// A function make a 2D array for a string
 // aString: a string
 // size: size of 2D array
 // return: a 2D size array with target size
@@ -72,15 +70,11 @@ var twoDArray = function(aString, size){
     i += size[0]*size[1];
   return twoDArray;
 }
-var aString = "dontcompareyourselftootherscompareyourselftothepersonyouwereyesterday";
-var size = [9,8];
-var td = twoDArray(aString, size);
 
 // A function to output a string by reading down the columns going left to right
-
+// twoDArray: a two Dimention array
+// return: an array with elements twisted from a two demention array
 var outputArray = function(twoDArray){
-  // alert(twoDArray);
-  // debugger;
   var row = twoDArray.length;
   var col = twoDArray[0].length;
 
@@ -95,20 +89,18 @@ var outputArray = function(twoDArray){
   }
   return result;
 };
-var rArray = outputArray(td);
 
-// in group of five letters
+// Group elements in a array into five length group
+// aArray: an array
+// return: in groups of five letters
 var fiveLetterGroup = function(aArray){
   result = "";
   count = 0;
 
   for ( var i = 0; i < aArray.length; i++){
-    // debugger;
     if (i % 5 === 0){
       count += 1;
-      // console.log(count);
       result += aArray.slice(i-5, i).join("") + " ";
-      // console.log(result);
     }
   }
   if ((count-1)*5 <= aArray.length){
@@ -116,7 +108,26 @@ var fiveLetterGroup = function(aArray){
   }
   return result;
 }
-alert(fiveLetterGroup(rArray));
 
 
 //////////////////////////////////////////////////////////////////////////////
+//user interface logic
+$().ready(function(){
+  $(".encrypt-form").submit(function(e){
+    e.preventDefault();
+
+    var input = $("#string").val();
+    if (input){
+      var cleanStaring = alphobeticalOnly(input);
+      var size = caculateSquareSize(cleanStaring.length);
+      var td = twoDArray(cleanStaring, size);
+      var pivalArray = outputArray(td);
+      var result = fiveLetterGroup(pivalArray);
+      $(".output").append("<p class='lead mt-5'>" + result + "</p>");
+  }else{
+      result = "Please enter something";
+      $(".output").append("<p class='lead mt-5'>" + result + "</p>");
+  }
+});
+
+});
